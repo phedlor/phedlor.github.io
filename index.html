@@ -19,19 +19,18 @@
 </head>
 <body class="container">
 	
-	 <div style="position: relative; top: 0px; text-align: center;">
+<div style="position: relative; top: 0px; text-align: center;">
   <img src="PHED logo.png" alt="PHED" 
        style="width: 300px; height: auto; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;">
   <h1>LOR CALCULATOR</h1>
 </div>
-
-<!--<h1>LOR Calculator</h1>-->
 
 <!-- Step indicator -->
 <div class="step-indicator">
   <div class="indicator active" id="ind1" onclick="showStep('step1', 1)">Step 1</div>
   <div class="indicator" id="ind2" onclick="showStep('step2', 2)">Step 2</div>
   <div class="indicator" id="ind3" onclick="showStep('step3', 3)">Step 3</div>
+  <div class="indicator" id="ind4" onclick="showStep('step4', 4)">Result</div>
 </div>
 
 <!-- Step 1 -->
@@ -148,10 +147,17 @@
     </div>
   </div>
 
-  <div id="result" class="mt-4"></div> 
 <div class="d-flex justify-content-between mt-3">
   <button class="btn btn-secondary" id="back3">⬅️ Back</button>
   <button class="btn btn-success" id="finish">✅ Finish</button>
+</div>
+</div>
+
+<!-- Step 4 (Result) -->
+<div class="step" id="step4" style="display:none;">
+  <div id="result" class="mt-4"></div>
+<div class="d-flex justify-content-between mt-3">
+  <button class="btn btn-secondary" id="back4">⬅️ Back</button>
 </div>
 </div>
 
@@ -182,7 +188,7 @@
     ],
     "33KV": [
       { value: "Transcorp", text: "Transcorp" },
-	{ value: "Diamond", text: "Diamond" }, 
+      { value: "Diamond", text: "Diamond" }, 
       { value: "Amika", text: "Amika" }
     ]
   };
@@ -195,7 +201,7 @@
     "Goldie": { transformers: 6, maxLoad: 5.1 },
     "Transcorp": { transformers: 26, maxLoad: 1.3 },
     "Amika": { transformers: 11, maxLoad: 14 }, 
-	 "Diamond": { transformers: 7, maxLoad: 5.6 } 
+    "Diamond": { transformers: 7, maxLoad: 5.6 } 
   };
 
   // Populate feeders on voltage selection
@@ -252,9 +258,9 @@
   document.getElementById("back2").onclick = () => showStep("step1", 1);
   document.getElementById("next2").onclick = () => showStep("step3", 3);
   document.getElementById("back3").onclick = () => showStep("step2", 2);
+  document.getElementById("back4").onclick = () => showStep("step3", 3);
 
-    // Finish & Calculate Section A Total
-   // Finish & Calculate Section A Total
+  // Finish & Calculate Section A Total
   document.getElementById("finish").onclick = () => {
     const region = document.getElementById("region").value;
     const feeder = document.getElementById("feeder").value;
@@ -315,35 +321,32 @@
           </ul>
 
           <button id="exportPDF" class="btn btn-danger no-export">
-  📄 Export to PDF
-</button>
+            📄 Export to PDF
+          </button>
         </div>
-      </div>
+		</div>
     `;
 
     // Attach export function after rendering
-   document.getElementById("exportPDF").addEventListener("click", () => {
-  const element = document.getElementById("resultCard");
-  const opt = {
-    margin:       10,
-    filename:     `LOR_Calculation_${region}_${feeder}.pdf`,
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, ignoreElements: (el) => el.classList.contains("no-export") },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-  html2pdf().set(opt).from(element).save();
-});
+    document.getElementById("exportPDF").addEventListener("click", () => {
+      const element = document.getElementById("resultCard");
+      const opt = {
+        margin: 10,
+        filename: `LOR_Calculation_${region}_${feeder}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, ignoreElements: (el) => el.classList.contains("no-export") },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    });
+
+    // Move to Step 4 (Result)
+    showStep("step4", 4);
   };
 </script>
 	
-	<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </body>
 </html>
-
-
-
-
-
