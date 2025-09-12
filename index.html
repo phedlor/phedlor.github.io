@@ -121,12 +121,14 @@
 <!-- Step 3 -->
 <div class="step" id="step3" style="display:none;">
   <div class="row g-3">
+<!--
     <div class="col-12 col-md-6">
       <label class="form-label">Time to do the work (hr)</label>
       <input id="E7" type="number" class="form-control" value="1">
     </div>
+-->
     <div class="col-12 col-md-6">
-      <label class="form-label">Time to take and return permit (hr)</label>
+      <label class="form-label">Time to take outage and Isolate the line (hr)</label>
       <input id="E8" type="number" class="form-control" value="1">
     </div>
     <div class="col-12 col-md-6">
@@ -295,7 +297,7 @@
                 <tr><th>Total number of days</th><td>${totalDays}</td></tr>
                 <tr><th>Total Number of DTRs</th><td>${totalDTRs}</td></tr>
                 <tr><th>DTRs Affected</th><td>${affectedDTRs}</td></tr>
-                <tr><th>Time for permit (hr)</th><td>${timePermit}</td></tr>
+                <tr><th>Time for permit and Isolation (hr)</th><td>${timePermit}</td></tr>
               </tbody>
             </table>
           </div>
@@ -352,4 +354,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </body>
 </html>
+
 
