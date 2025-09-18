@@ -83,9 +83,9 @@
     </div>
 
     <!-- Feeder Info -->
-    <div class="col-12">
-      <div id="feederInfo"></div>
-    </div>
+  <div class="col-12">
+  <div id="feederInfo" class="text-center fw-bold mt-3"></div>
+</div>
   </div>
 <div class="d-flex justify-content-end mt-3">
   <button class="btn btn-primary" id="next1">Next ➡️</button>
@@ -225,20 +225,32 @@
   });
 
   // Show feeder info when selected + auto populate Peak Load & DTRs
-  feederSelect.addEventListener("change", function () {
-    const feeder = this.value;
-    if (feederData[feeder]) {
-      const data = feederData[feeder];
-      feederInfoDiv.innerHTML = 
-        `🟢 <b>${feeder}</b> Feeder:<br>
-         • Number of DTRs: ${data.transformers}<br>
-         • Maximum Load: ${data.maxLoad} MW`;
-      document.getElementById("E5").value = data.maxLoad;  
-      document.getElementById("E17").value = data.transformers; 
-    } else {
-      feederInfoDiv.innerHTML = "";
-    }
-  });
+  function updateFeederInfo() {
+  const feeder = feederSelect.value;
+  const voltage = voltageSelect.value;
+  const bandOption = bandSelect.options[bandSelect.selectedIndex];
+  const bandName = bandOption ? bandOption.text : "";
+  const bandValue = bandOption ? bandOption.value : "";
+
+  // Only display if BOTH feeder & band are chosen
+  if (feeder && feederData[feeder] && bandName) {
+    const data = feederData[feeder];
+    feederInfoDiv.innerHTML = 
+      `🟢 <b>${feeder}</b> Feeder ${voltage} Feeder<br>
+       ${bandName} — ₦${bandValue}/kwh<br>
+       • Number of DTRs: ${data.transformers}<br>
+       • Maximum Load: ${data.maxLoad} MW`;
+
+    // Auto populate fields
+    document.getElementById("E5").value = data.maxLoad;  
+    document.getElementById("E17").value = data.transformers; 
+  } else {
+    feederInfoDiv.innerHTML = "";
+  }
+}
+  // ✅ Add listeners so both update
+//  feederSelect.addEventListener("change", updateFeederInfo);
+  bandSelect.addEventListener("change", updateFeederInfo);
 
   // Stepper logic
   function showStep(stepId, stepIndex) {
@@ -357,7 +369,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 </body>
 </html>
-
 
 
 
